@@ -1,0 +1,371 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo-tudor-doc-vet.jpg";
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Button from "../components/Button.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import Icon from "../components/Icon.astro";
+import Highlight from "../components/Highlight.astro";
+import Stat from "../components/Stat.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import PawField from "../components/PawField.astro";
+import PawTrail from "../components/PawTrail.astro";
+import WaveDivider from "../components/WaveDivider.astro";
+import {
+  BRAND, NAP, SERVICES, DIFFERENTIATORS, VISIT_STEPS, REVIEWS, RATING,
+  STATS, FAQ, SCHEDULE, MAPS_URL, WHATSAPP_URL,
+} from "../data/site";
+
+const title = "Tudor Doc Vet — Cabinet veterinar în Piatra Neamț | Câini, pisici & fermă";
+const description =
+  "Cabinet veterinar în Piatra Neamț pentru câini, pisici și animale de fermă. Consultații, vaccinări, sterilizări, microcipări la cabinet sau la domiciliu. Sună: 0740 318 815.";
+
+const marqueeTags = [
+  "Empatie cu fiecare animal", "Explicații pe înțelesul tău", "Prețuri corecte",
+  "Răbdare cu pacienții anxioși", "Venim la domiciliu", "Companie și fermă", "Carnet la zi",
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+---
+<Base title={title} description={description} schema={faqSchema}>
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section data-hero-reveal class="relative overflow-hidden bg-cream">
+    <div class="container-page grid items-center gap-12 py-12 md:py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-20">
+      <div class="max-w-xl">
+        <p class="hero-reveal eyebrow flex items-center gap-2" style="--hero-step:0">
+          <Icon name="map-pin" size={14} /> Piatra Neamț · La cabinet și la domiciliu
+        </p>
+        <h1 class="hero-reveal mt-5 text-display font-extrabold leading-[0.98] text-ink" style="--hero-step:1">
+          Grijă adevărată pentru animalul tău, <Highlight>oriunde ai nevoie</Highlight>.
+        </h1>
+        <p class="hero-reveal measure mt-6 text-lead text-slate" style="--hero-step:2">
+          La Tudor Doc Vet îngrijim câini, pisici și animale de fermă, la cabinet în Piatra Neamț sau acasă la tine. Vii cu o grijă, pleci cu un plan.
+        </p>
+        <div class="hero-reveal mt-8 flex flex-wrap gap-3" style="--hero-step:3">
+          <Button href="/contact/#programare" variant="primary" icon="calendar">Programează o vizită</Button>
+          <Button href={`tel:${NAP.phoneE164}`} variant="outline" icon="phone" dataEvent="click_tel">{NAP.phoneDisplay}</Button>
+        </div>
+        <div class="hero-reveal mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style="--hero-step:4">
+          <div class="flex items-center gap-2.5">
+            <div class="flex text-sun-deep">
+              {Array.from({ length: 5 }).map(() => <Icon name="star" size={17} />)}
+            </div>
+            <span class="text-[0.92rem] text-slate">
+              <span class="font-semibold text-ink">{RATING.value}</span> · {RATING.count} de recenzii pe Google
+            </span>
+          </div>
+          <span class="hidden h-5 w-px bg-line sm:block"></span>
+          <div class="flex items-center gap-2 text-[0.92rem] text-slate">
+            <Icon name="paw" size={16} class="text-indigo" /> Companie și fermă
+          </div>
+        </div>
+      </div>
+
+      <!-- Compoziția de brand cu parallax subtil. Sloturile de foto reală vin aici. -->
+      <div class="hero-media relative">
+        <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep px-6 py-10 sm:px-10">
+          <PawField class="pointer-events-none absolute inset-0" />
+          <div class="relative mx-auto max-w-[320px]" data-parallax="0.06">
+            <div class="rounded-3xl bg-white p-6 shadow-[var(--shadow-lift)]">
+              <Image
+                src={logo}
+                alt="Tudor Doc Vet, cabinet veterinar în Piatra Neamț"
+                width={360}
+                height={360}
+                densities={[1, 2]}
+                loading="eager"
+                fetchpriority="high"
+                class="mx-auto h-auto w-full rounded-2xl object-contain"
+              />
+            </div>
+            <div class="mt-5 grid grid-cols-2 gap-3">
+              <div class="rounded-2xl bg-cream/95 px-4 py-3.5">
+                <p class="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-indigo">
+                  <Icon name="clock" size={13} /> Program
+                </p>
+                <p class="mt-1 text-[0.9rem] font-semibold text-ink">L–V 07–21</p>
+                <p class="text-[0.82rem] text-slate">Weekend 09–17</p>
+              </div>
+              <div class="rounded-2xl bg-sun px-4 py-3.5 text-ink">
+                <p class="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.12em]">
+                  <Icon name="home" size={13} /> La domiciliu
+                </p>
+                <p class="mt-1 text-[0.9rem] font-semibold">Venim la tine</p>
+                <p class="text-[0.82rem] text-ink/70">În Piatra Neamț</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Chip recenzie flotant -->
+        <div class="absolute -bottom-4 -left-3 hidden items-center gap-2.5 rounded-2xl border border-line bg-cream px-4 py-3 shadow-[var(--shadow-soft)] sm:flex lg:-left-6">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sun/20 text-[0.78rem] font-bold text-indigo">C.C.</span>
+          <span class="text-[0.82rem] leading-tight text-ink">„Ne ducem cu <span class="font-semibold">încredere</span>.”<br /><span class="text-slate">Recenzie Google</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATISTICI (count-up) ────────────────────────────── -->
+  <Section tone="mist" class="!py-12">
+    <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+      {STATS.map((s) => (
+        <Stat value={s.value} suffix={s.suffix} decimals={s.decimals} label={s.label} />
+      ))}
+    </div>
+  </Section>
+
+  <WaveDivider top="var(--color-mist)" bottom="var(--color-cream)" variant="wave" />
+
+  <!-- ── DIFERENȚIATORI: domiciliu + fermă ────────────────── -->
+  <Section tone="cream">
+    <div class="max-w-2xl">
+      <Eyebrow>De ce Tudor Doc Vet</Eyebrow>
+      <h2 class="text-h2 font-bold text-ink">Două lucruri pe care puțini le fac.</h2>
+    </div>
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      {DIFFERENTIATORS.map((d, i) => (
+        <a
+          href={d.href}
+          class="group relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep p-8 text-cream transition-shadow duration-300 hover:shadow-[var(--shadow-lift)] sm:p-10"
+        >
+          <PawField class="pointer-events-none absolute inset-0" opacity={i === 0 ? 0.08 : 0.06} />
+          <div class="relative flex h-full flex-col">
+            <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-sun text-ink"><Icon name={d.icon} size={28} /></span>
+            <p class="mt-6 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-sun">{d.kicker}</p>
+            <h3 class="mt-2 font-display text-[1.7rem] font-bold text-cream">{d.title}</h3>
+            <p class="mt-3 max-w-md text-[1rem] leading-relaxed text-cream/78">{d.body}</p>
+            <span class="mt-6 inline-flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-[0.08em] text-sun">
+              Află mai mult
+              <Icon name="arrow-right" size={16} class="transition-transform duration-200 group-hover:translate-x-1" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <WaveDivider top="var(--color-cream)" bottom="var(--color-ivory)" variant="arch" />
+
+  <!-- ── SERVICII ─────────────────────────────────────────── -->
+  <Section tone="ivory" id="servicii">
+    <div class="max-w-2xl">
+      <Eyebrow>Servicii</Eyebrow>
+      <h2 class="text-h2 font-bold text-ink">Tot ce are nevoie animalul tău, <Highlight anim>într-un singur loc</Highlight>.</h2>
+      <p class="measure mt-4 text-lead text-slate">Pentru câini, pisici și animale de fermă. La cabinet sau la domiciliu.</p>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {SERVICES.map((s) => (
+        <ServiceCard icon={s.icon} name={s.name} body={s.body} href={`/servicii/#${s.id}`} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- ── CUM DECURGE O VIZITĂ (timeline) ──────────────────── -->
+  <Section tone="cream">
+    <div class="max-w-2xl">
+      <Eyebrow>Cum decurge</Eyebrow>
+      <h2 class="text-h2 font-bold text-ink">De la primul telefon la animalul sănătos.</h2>
+    </div>
+    <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      {VISIT_STEPS.map((step, i) => (
+        <li class="relative">
+          <div class="flex items-center gap-4 lg:block">
+            <span class="relative z-10 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-indigo font-display text-[1.4rem] font-bold text-cream shadow-[var(--shadow-soft)]">{step.n}</span>
+            {i < VISIT_STEPS.length - 1 && (
+              <span class="hidden h-px flex-1 bg-line lg:absolute lg:left-14 lg:right-0 lg:top-7 lg:block"></span>
+            )}
+          </div>
+          <h3 class="mt-5 font-display text-[1.2rem] font-bold text-ink">{step.title}</h3>
+          <p class="mt-2 text-[0.96rem] leading-relaxed text-slate">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <!-- ── MARQUEE de valori ────────────────────────────────── -->
+  <div class="border-y border-line bg-sand py-5">
+    <div class="marquee-mask overflow-hidden">
+      <div class="marquee-track" style="--marquee-dur:38s">
+        {[0, 1].map(() => (
+          <ul class="flex shrink-0 items-center gap-10 pr-10" aria-hidden="true">
+            {marqueeTags.map((t) => (
+              <li class="flex items-center gap-3 whitespace-nowrap text-[1.05rem] font-medium text-ink">
+                <Icon name="paw" size={16} class="text-sun-deep" /> {t}
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DE CE NOI + recenzie ─────────────────────────────── -->
+  <Section tone="ivory">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+      <div>
+        <Eyebrow>Cum lucrăm</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Vii cu o grijă, pleci cu un plan.</h2>
+        <p class="measure mt-4 text-lead text-slate">Cei mai mulți stăpâni pleacă de la veterinar cu și mai multe întrebări. Aici se întâmplă invers.</p>
+        <ul class="mt-8 space-y-6">
+          <li class="flex gap-4">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo/8 text-indigo"><Icon name="heart" size={22} /></span>
+            <div>
+              <h3 class="font-display text-[1.16rem] font-bold text-ink">Timp și răbdare</h3>
+              <p class="mt-1.5 text-[0.98rem] text-slate">Nu ești grăbit afară. Lăsăm animalul să se obișnuiască, punem întrebări și ascultăm.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo/8 text-indigo"><Icon name="stethoscope" size={22} /></span>
+            <div>
+              <h3 class="font-display text-[1.16rem] font-bold text-ink">Explicații pe înțelesul tău</h3>
+              <p class="mt-1.5 text-[0.98rem] text-slate">Îți spunem clar ce are, de ce, și ce urmează, fără termeni pe care să-i cauți acasă.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-indigo/8 text-indigo"><Icon name="home" size={22} /></span>
+            <div>
+              <h3 class="font-display text-[1.16rem] font-bold text-ink">Aproape și flexibil</h3>
+              <p class="mt-1.5 text-[0.98rem] text-slate">Program lung în timpul săptămânii și în weekend, plus vizite la domiciliu când e mai ușor așa.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <figure class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep p-8 sm:p-10">
+        <PawField class="pointer-events-none absolute inset-0" opacity={0.08} />
+        <div class="relative flex h-full flex-col justify-center">
+          <Icon name="quote" size={40} class="text-sun" />
+          <blockquote class="mt-5 font-display text-[1.5rem] font-medium leading-snug text-cream sm:text-[1.75rem]">
+            {REVIEWS[1].quote}
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-3 text-cream/70">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sun/18 font-semibold text-sun">{REVIEWS[1].author}</span>
+            <span class="text-[0.9rem]">Recenzie Google · Piatra Neamț</span>
+          </figcaption>
+        </div>
+      </figure>
+    </div>
+  </Section>
+
+  <!-- ── RECENZII ─────────────────────────────────────────── -->
+  <Section tone="cream">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div class="max-w-xl">
+        <Eyebrow>Recenzii</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Ce spun oamenii din Piatra Neamț.</h2>
+      </div>
+      <div class="flex items-center gap-3 rounded-full border border-line bg-sand px-5 py-3">
+        <div class="flex text-sun-deep">
+          {Array.from({ length: 5 }).map(() => <Icon name="star" size={16} />)}
+        </div>
+        <span class="text-[0.9rem] text-ink"><span class="font-semibold">{RATING.value}</span> din 5 · {RATING.count} recenzii</span>
+      </div>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {REVIEWS.map((r) => (
+        <figure class="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-ivory p-7">
+          <Icon name="quote" size={28} class="text-sun-deep" />
+          <blockquote class="mt-4 flex-1 text-[1.02rem] leading-relaxed text-ink">{r.quote}</blockquote>
+          <figcaption class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-indigo/8 text-[0.8rem] font-semibold text-indigo">{r.author}</span>
+            <span class="text-[0.86rem] text-slate">Recenzie {r.source}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </Section>
+
+  <PawTrail class="bg-cream pb-4" />
+
+  <!-- ── PROGRAM & LOCAȚIE ────────────────────────────────── -->
+  <Section tone="mist" id="program">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+      <div>
+        <Eyebrow>Program &amp; locație</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Ușor de găsit, deschis când ai nevoie.</h2>
+        <dl class="mt-8 divide-y divide-mist-line border-y border-mist-line">
+          {SCHEDULE.groups.map((g) => (
+            <div class="flex items-center justify-between py-3.5">
+              <dt class="text-[0.98rem] text-slate">{g.label}</dt>
+              <dd class="text-[0.98rem] font-semibold text-ink">{g.hours}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-4 flex items-center gap-2 text-[0.9rem] text-slate">
+          <Icon name="home" size={16} class="text-indigo" /> {SCHEDULE.note}
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună acum</Button>
+          <Button href={WHATSAPP_URL} variant="outline" icon="whatsapp" external dataEvent="click_whatsapp">WhatsApp</Button>
+        </div>
+      </div>
+
+      <div class="rounded-[var(--radius-media)] border border-mist-line bg-cream p-7 sm:p-8">
+        <div class="flex items-start gap-3">
+          <Icon name="map-pin" size={22} class="mt-1 shrink-0 text-indigo" />
+          <div>
+            <p class="font-display text-[1.16rem] font-bold text-ink">{BRAND.legalName}</p>
+            <p class="mt-1 text-[0.98rem] text-slate">{NAP.street}<br />{NAP.postalCode} {NAP.city}, jud. {NAP.region}</p>
+          </div>
+        </div>
+        <div class="mt-6 space-y-3 border-t border-line pt-6 text-[0.98rem]">
+          <a href={`tel:${NAP.phoneE164}`} data-event="click_tel" class="flex items-center gap-3 text-ink transition-colors hover:text-indigo">
+            <Icon name="phone" size={18} class="text-slate" /> {NAP.phoneDisplay}
+          </a>
+          <a href={`mailto:${NAP.email}`} class="flex items-center gap-3 text-ink transition-colors hover:text-indigo">
+            <Icon name="mail" size={18} class="text-slate" /> {NAP.email}
+          </a>
+        </div>
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" class="mt-7 inline-flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-indigo transition-colors hover:text-sun-deep">
+          <Icon name="map-pin" size={16} /> Deschide în Google Maps <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────── -->
+  <Section tone="cream">
+    <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div>
+        <Eyebrow>Întrebări frecvente</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Bine de știut înainte să vii.</h2>
+        <p class="measure mt-4 text-[1rem] text-slate">Nu găsești răspunsul? Sună la <a href={`tel:${NAP.phoneE164}`} data-event="click_tel" class="font-semibold text-indigo underline-offset-2 hover:underline">{NAP.phoneDisplay}</a>.</p>
+      </div>
+      <div class="divide-y divide-line border-y border-line">
+        {FAQ.map((f) => (
+          <details class="group py-1">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-[1.12rem] font-bold text-ink transition-colors hover:text-indigo">
+              {f.q}
+              <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line text-indigo transition-transform duration-200 group-open:rotate-45">
+                <Icon name="plus" size={16} />
+              </span>
+            </summary>
+            <p class="measure pb-5 text-[0.98rem] leading-relaxed text-slate">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- ── CTA FINAL ────────────────────────────────────────── -->
+  <Section tone="deep" class="relative overflow-hidden">
+    <PawField class="pointer-events-none absolute inset-0" opacity={0.07} />
+    <div class="relative mx-auto max-w-2xl text-center">
+      <h2 class="text-h2 font-bold text-cream">Programează o vizită pentru animalul tău.</h2>
+      <p class="mx-auto mt-4 max-w-lg text-lead text-cream/75">Un telefon scurt și găsim împreună ora potrivită, la cabinet sau la tine acasă.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună: {NAP.phoneDisplay}</Button>
+        <Button href="/contact/#programare" variant="light" icon="calendar">Cere o programare</Button>
+      </div>
+    </div>
+  </Section>
+</Base>

@@ -1,0 +1,121 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import Highlight from "../components/Highlight.astro";
+import PawField from "../components/PawField.astro";
+import { SITE_URL, NAP, WHATSAPP_HOME_URL } from "../data/site";
+
+const title = "Consultații veterinare la domiciliu în Piatra Neamț | Tudor Doc Vet";
+const description =
+  "Veterinar la domiciliu în Piatra Neamț și împrejurimi. Consultații, vaccinări, deparazitare și tratamente acasă la tine, cu mai puțin stres pentru animal. Sună: 0740 318 815.";
+
+const whyHome = [
+  { icon: "heart" as const, title: "Mai puțin stres", text: "Multe animale, mai ales pisicile și cei în vârstă, se sperie de transport și de cabinet. Acasă rămân calme și cooperante." },
+  { icon: "clock" as const, title: "Zero drumuri pentru tine", text: "Nu mai încarci cușca în mașină și nu mai stai la rând. Stabilim o oră și venim la tine." },
+  { icon: "paw" as const, title: "Bun pentru mai multe animale", text: "Ai mai mulți câini, pisici sau animale în gospodărie? Le vedem pe toate într-o singură vizită." },
+];
+
+const atHome = [
+  "Consultații și controale de rutină",
+  "Vaccinări și carnet de sănătate",
+  "Deparazitare internă și externă",
+  "Microcipare și înregistrare",
+  "Tratamente și monitorizare",
+  "Recomandări și plan de îngrijire",
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Consultații veterinare la domiciliu",
+  serviceType: "Veterinar la domiciliu",
+  provider: { "@id": `${SITE_URL}/#cabinet` },
+  areaServed: { "@type": "City", name: "Piatra Neamț" },
+  description,
+};
+---
+<Base title={title} description={description} schema={schema}>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-cream">
+    <div class="container-page grid items-center gap-12 py-14 md:py-18 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div class="max-w-xl">
+        <Eyebrow>La domiciliu</Eyebrow>
+        <h1 class="text-h1 font-extrabold text-ink">Veterinarul vine <Highlight>acasă la tine</Highlight>.</h1>
+        <p class="measure mt-5 text-lead text-slate">
+          Pentru consultații, vaccinări și multe tratamente, venim la tine în Piatra Neamț și împrejurimi, cu tot ce trebuie. Animalul rămâne în mediul lui, iar tu economisești un drum.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună pentru domiciliu</Button>
+          <Button href={WHATSAPP_HOME_URL} variant="outline" icon="whatsapp" external dataEvent="click_whatsapp">Scrie pe WhatsApp</Button>
+        </div>
+      </div>
+      <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep p-10">
+        <PawField class="pointer-events-none absolute inset-0" opacity={0.09} />
+        <div class="relative flex flex-col items-center justify-center py-6 text-center">
+          <span class="inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-sun text-ink"><Icon name="home" size={40} /></span>
+          <p class="mt-6 font-display text-[1.6rem] font-bold text-cream">La tine, în confortul casei</p>
+          <p class="mt-2 max-w-xs text-[0.96rem] text-cream/75">Piatra Neamț și localitățile din jur</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- De ce -->
+  <Section tone="ivory">
+    <div class="max-w-2xl">
+      <Eyebrow>De ce la domiciliu</Eyebrow>
+      <h2 class="text-h2 font-bold text-ink">Uneori, cel mai bun cabinet e casa ta.</h2>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {whyHome.map((w) => (
+        <div class="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-cream p-7">
+          <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo/8 text-indigo"><Icon name={w.icon} size={24} /></span>
+          <h3 class="mt-5 font-display text-[1.2rem] font-bold text-ink">{w.title}</h3>
+          <p class="mt-2.5 text-[0.98rem] leading-relaxed text-slate">{w.text}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Ce facem la domiciliu -->
+  <Section tone="cream">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+      <div>
+        <Eyebrow>Ce facem acasă la tine</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Aproape tot ce facem la cabinet.</h2>
+        <p class="measure mt-4 text-[1rem] text-slate">Intervențiile care au nevoie de dotările cabinetului (de exemplu sterilizările) le programăm acolo, dar restul le rezolvăm la tine.</p>
+        <ul class="mt-7 grid gap-3 sm:grid-cols-2">
+          {atHome.map((a) => (
+            <li class="flex gap-2.5 text-[0.98rem] text-ink">
+              <Icon name="check" size={18} class="mt-0.5 shrink-0 text-sun-deep" /> <span>{a}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-[var(--radius-media)] border border-line bg-sand p-8">
+        <p class="flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo"><Icon name="map-pin" size={15} /> Zona acoperită</p>
+        <p class="mt-3 text-[1.05rem] leading-relaxed text-ink">Piatra Neamț și localitățile din jur. Sună-ne cu adresa și îți confirmăm dacă ajungem și cât durează.</p>
+        <div class="mt-6 border-t border-line pt-6">
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo">Cum stabilim ora</p>
+          <p class="mt-3 text-[1rem] leading-relaxed text-slate">Ne suni sau ne scrii pe WhatsApp, ne spui ce are animalul și unde stai, iar noi găsim cel mai apropiat interval liber.</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section tone="deep" class="relative overflow-hidden">
+    <PawField class="pointer-events-none absolute inset-0" opacity={0.07} />
+    <div class="relative mx-auto max-w-2xl text-center">
+      <h2 class="text-h2 font-bold text-cream">Programează o vizită la domiciliu.</h2>
+      <p class="mx-auto mt-4 max-w-lg text-lead text-cream/75">Spune-ne unde ești și ce are animalul, iar noi venim pregătiți.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună: {NAP.phoneDisplay}</Button>
+        <Button href={WHATSAPP_HOME_URL} variant="light" icon="whatsapp" external dataEvent="click_whatsapp">WhatsApp</Button>
+      </div>
+    </div>
+  </Section>
+</Base>

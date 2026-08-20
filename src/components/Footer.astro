@@ -1,0 +1,99 @@
+---
+import { BRAND, NAP, NAV, SCHEDULE, SOCIAL, MAPS_URL, WHATSAPP_URL } from "../data/site";
+import Icon from "./Icon.astro";
+
+const year = new Date().getFullYear();
+const socials = [
+  { name: "facebook" as const, href: SOCIAL.facebook, label: "Facebook" },
+  { name: "instagram" as const, href: SOCIAL.instagram, label: "Instagram" },
+].filter((s) => s.href);
+---
+<footer class="bg-indigo-deep text-cream">
+  <div class="container-page grid gap-12 py-16 md:grid-cols-[1.3fr_1fr_1fr] md:py-20">
+    <div>
+      <div class="inline-flex items-center rounded-2xl bg-white p-2.5 shadow-[0_16px_40px_-20px_rgba(0,0,0,0.6)]">
+        <img
+          src="/logo-tudor-doc-vet.jpg"
+          alt="Tudor Doc Vet — cabinet veterinar în Piatra Neamț"
+          width="72"
+          height="72"
+          class="h-16 w-16 rounded-xl object-contain"
+          loading="lazy"
+        />
+      </div>
+      <p class="measure mt-5 text-[0.98rem] text-cream/72">
+        Cabinet veterinar în Piatra Neamț pentru câini, pisici și animale de fermă. La cabinet sau la domiciliu, cu răbdare și explicații pe înțelesul tău.
+      </p>
+      {socials.length > 0 && (
+        <div class="mt-6 flex gap-3">
+          {socials.map((s) => (
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/18 text-cream/80 transition-colors hover:border-sun hover:text-sun"
+            >
+              <Icon name={s.name} size={18} />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div>
+      <h2 class="font-body text-[0.72rem] font-bold uppercase tracking-[0.18em] text-sun">Contact</h2>
+      <ul class="mt-5 space-y-3.5 text-[0.96rem] text-cream/82">
+        <li class="flex gap-3">
+          <Icon name="map-pin" size={18} class="mt-0.5 shrink-0 text-cream/55" />
+          <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-sun">
+            {NAP.street}, {NAP.city}
+          </a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="phone" size={18} class="mt-0.5 shrink-0 text-cream/55" />
+          <a href={`tel:${NAP.phoneE164}`} data-event="click_tel" class="transition-colors hover:text-sun">
+            {NAP.phoneDisplay}
+          </a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="whatsapp" size={18} class="mt-0.5 shrink-0 text-cream/55" />
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-event="click_whatsapp" class="transition-colors hover:text-sun">
+            Scrie-ne pe WhatsApp
+          </a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="mail" size={18} class="mt-0.5 shrink-0 text-cream/55" />
+          <a href={`mailto:${NAP.email}`} class="transition-colors hover:text-sun">{NAP.email}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="font-body text-[0.72rem] font-bold uppercase tracking-[0.18em] text-sun">Program</h2>
+      <ul class="mt-5 space-y-2.5 text-[0.96rem] text-cream/82">
+        {SCHEDULE.groups.map((g) => (
+          <li class="flex items-center justify-between gap-4">
+            <span class="text-cream/72">{g.label}</span>
+            <span class="font-semibold text-cream">{g.hours}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-[0.86rem] text-cream/60">{SCHEDULE.note}</p>
+
+      <h2 class="mt-8 font-body text-[0.72rem] font-bold uppercase tracking-[0.18em] text-sun">Pagini</h2>
+      <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[0.94rem] text-cream/82">
+        {NAV.map((link) => (
+          <li><a href={link.href} class="transition-colors hover:text-sun">{link.short}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/12">
+    <div class="container-page flex flex-col gap-2 py-6 text-[0.8rem] text-cream/55 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {BRAND.legalName}. Toate drepturile rezervate.</p>
+      <p>Piatra Neamț, Neamț</p>
+    </div>
+  </div>
+</footer>

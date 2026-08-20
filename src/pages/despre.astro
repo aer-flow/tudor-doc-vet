@@ -1,0 +1,117 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Button from "../components/Button.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import Icon from "../components/Icon.astro";
+import PageHero from "../components/PageHero.astro";
+import PawField from "../components/PawField.astro";
+import { BRAND, NAP, RATING, REVIEWS } from "../data/site";
+
+const title = "Despre Tudor Doc Vet — Dr. Tudor Andrei, Piatra Neamț";
+const description =
+  "Tudor Doc Vet este cabinetul veterinar al Dr. Tudor Andrei din Piatra Neamț. Grijă, răbdare și explicații clare pentru câini și pisici.";
+
+const values = [
+  {
+    icon: "heart" as const,
+    title: "Empatie cu fiecare animal",
+    text: "Tratăm animalele cu blândețe și răbdare, ca o vizită la doctor să nu fie o spaimă nici pentru ei, nici pentru tine.",
+  },
+  {
+    icon: "stethoscope" as const,
+    title: "Profesionalism, pe înțelesul tău",
+    text: "Diagnostic atent și tratament potrivit, explicate simplu. Pleci acasă cu pași clari, nu cu jargon medical.",
+  },
+  {
+    icon: "check" as const,
+    title: "Prețuri corecte",
+    text: "Îți spunem din timp ce presupune tratamentul. Fără costuri surpriză la final.",
+  },
+];
+---
+<Base title={title} description={description}>
+  <PageHero
+    eyebrow="Despre"
+    title="Un veterinar pe care te poți baza, în Piatra Neamț."
+    lead="Tudor Doc Vet este cabinetul Dr. Tudor Andrei, un loc unde animalul tău e tratat cu grijă, iar tu primești răspunsuri limpezi."
+  />
+
+  <!-- Intro medic + brand -->
+  <Section tone="cream">
+    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
+      <div>
+        <Eyebrow>Dr. Tudor Andrei</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Medicul din spatele cabinetului.</h2>
+        <div class="measure mt-5 space-y-4 text-[1.04rem] leading-relaxed text-ink">
+          <p>
+            De ani buni, Dr. Tudor Andrei îngrijește animalele familiilor din Piatra Neamț: câini, pisici și animalele din gospodărie și fermă. La cabinet sau acasă la tine. Oamenii revin pentru același motiv: se simt ascultați, iar animalele lor sunt pe mâini bune.
+          </p>
+          <p class="text-slate">
+            Aici o consultație nu înseamnă cinci minute și o rețetă. Înseamnă timp să întrebi, un medic care se uită cu atenție și un plan pe care chiar îl înțelegi când ajungi acasă.
+          </p>
+        </div>
+        <div class="mt-8 flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-sand px-6 py-5">
+          <div class="flex text-sun-deep">
+            {Array.from({ length: 5 }).map(() => <Icon name="star" size={18} />)}
+          </div>
+          <p class="text-[0.96rem] text-ink"><span class="font-semibold">{RATING.value}</span> din 5 din <span class="font-semibold">{RATING.count}</span> de recenzii pe Google</p>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep p-8 sm:p-10">
+        <PawField class="pointer-events-none absolute inset-0" opacity={0.08} />
+        <div class="relative rounded-3xl bg-white p-6 shadow-[var(--shadow-lift)]">
+          <img
+            src="/logo-tudor-doc-vet.jpg"
+            alt="Tudor Doc Vet — cabinet veterinar Piatra Neamț"
+            width="640"
+            height="640"
+            class="mx-auto h-auto w-full max-w-[300px] rounded-2xl object-contain"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Valori -->
+  <Section tone="ivory">
+    <div class="max-w-2xl">
+      <Eyebrow>Cum lucrăm</Eyebrow>
+      <h2 class="text-h2 font-bold text-ink">Trei lucruri pe care le vei simți de la prima vizită.</h2>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {values.map((v) => (
+        <div class="flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-cream p-7">
+          <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo/8 text-indigo"><Icon name={v.icon} size={24} /></span>
+          <h3 class="mt-5 font-display text-[1.24rem] font-bold text-ink">{v.title}</h3>
+          <p class="mt-2.5 text-[0.98rem] leading-relaxed text-slate">{v.text}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Pull-quote recenzie -->
+  <Section tone="sand">
+    <figure class="mx-auto max-w-3xl text-center">
+      <Icon name="star" size={28} class="mx-auto text-sun-deep" />
+      <blockquote class="mt-5 font-display text-[1.7rem] font-medium leading-snug text-ink sm:text-[2.1rem]">
+        „{REVIEWS[0].quote}”
+      </blockquote>
+      <figcaption class="mt-6 text-[0.92rem] text-slate">{REVIEWS[0].author} · Recenzie Google, Piatra Neamț</figcaption>
+    </figure>
+  </Section>
+
+  <!-- CTA -->
+  <Section tone="deep">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-h2 font-bold text-cream">Hai cu animalul tău la o vizită.</h2>
+      <p class="mx-auto mt-4 max-w-lg text-lead text-cream/75">Suntem în centru, pe {NAP.street}. Sună pentru o programare sau treci pentru o urgență.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună: {NAP.phoneDisplay}</Button>
+        <Button href="/contact/" variant="light" icon="map-pin">Vezi cum ajungi</Button>
+      </div>
+    </div>
+  </Section>
+</Base>

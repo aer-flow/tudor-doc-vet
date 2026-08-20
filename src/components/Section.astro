@@ -1,0 +1,53 @@
+---
+interface Props {
+  tone?: "cream" | "ivory" | "sand" | "oat" | "mist" | "deep";
+  id?: string;
+  class?: string;
+  contained?: boolean;
+}
+const {
+  tone = "cream",
+  id,
+  class: className = "",
+  contained = true,
+} = Astro.props;
+
+const TONES = {
+  cream: { text: "text-ink", bg: "bg-cream" },
+  ivory: { text: "text-ink", bg: "bg-ivory" },
+  sand: { text: "text-ink", bg: "bg-sand" },
+  oat: { text: "text-ink", bg: "bg-oat" },
+  mist: { text: "text-ink", bg: "bg-mist" },
+  deep: { text: "text-cream", bg: "bg-indigo-deep" },
+} as const;
+
+const t = TONES[tone];
+const isDeep = tone === "deep";
+---
+<section
+  id={id}
+  class:list={[t.text, t.bg, "py-(--spacing-section)", isDeep && "deep-stage", className]}
+>
+  {contained ? (
+    <div class="container-page w-full"><slot /></div>
+  ) : (
+    <slot />
+  )}
+</section>
+
+<style>
+  /* Pe scena indigo, textul și bordurile se inversează spre cald-deschis. */
+  :global(.deep-stage [class~="text-slate"]) {
+    color: color-mix(in srgb, var(--color-cream) 76%, transparent);
+  }
+  :global(.deep-stage [class~="text-ink"]) {
+    color: var(--color-cream);
+  }
+  :global(.deep-stage .eyebrow) {
+    color: var(--color-sun);
+  }
+  :global(.deep-stage [class*="border-line"]),
+  :global(.deep-stage .stage-border) {
+    border-color: color-mix(in srgb, var(--color-cream) 16%, transparent);
+  }
+</style>

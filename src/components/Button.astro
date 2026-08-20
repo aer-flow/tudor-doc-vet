@@ -1,0 +1,64 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "indigo" | "outline" | "quiet" | "light";
+  icon?: "arrow-right" | "whatsapp" | "phone" | "map-pin" | "calendar" | "paw" | null;
+  external?: boolean;
+  class?: string;
+  dataEvent?: string;
+}
+const {
+  href,
+  variant = "primary",
+  icon = "arrow-right",
+  external = false,
+  class: className = "",
+  dataEvent,
+} = Astro.props;
+
+const base =
+  "group inline-flex items-center justify-center gap-2.5 rounded-full font-body font-semibold " +
+  "text-[0.82rem] tracking-[0.08em] uppercase px-7 py-3.5 cursor-pointer " +
+  "transition-[background-color,color,border-color,box-shadow,transform] duration-200 ease-out " +
+  "hover:-translate-y-px active:translate-y-0";
+
+const variants = {
+  // CTA principal: accentul galben cu text indigo — exact contrastul din logo.
+  primary:
+    "bg-sun text-ink border border-sun hover:bg-sun-deep hover:border-sun-deep hover:shadow-[0_16px_32px_-16px_rgba(224,173,0,0.7)]",
+  indigo:
+    "bg-indigo text-cream border border-indigo hover:bg-indigo-deep hover:border-indigo-deep hover:shadow-[0_16px_32px_-18px_rgba(28,26,90,0.8)]",
+  outline:
+    "bg-transparent text-indigo border border-indigo/30 hover:border-indigo hover:bg-indigo/6",
+  quiet:
+    "bg-sand text-ink border border-line hover:border-indigo/40 hover:text-indigo",
+  // Pentru scene închise indigo
+  light:
+    "bg-cream text-indigo border border-transparent hover:bg-white",
+};
+
+const cls = `${base} ${variants[variant]} ${className}`;
+const arrowCls =
+  icon === "arrow-right"
+    ? "transition-transform duration-200 ease-out group-hover:translate-x-1"
+    : "";
+---
+{href ? (
+  <a
+    href={href}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+    data-event={dataEvent}
+    class={cls}
+  >
+    <span><slot /></span>
+    {icon && <Icon name={icon} size={icon === "arrow-right" ? 17 : 16} class={arrowCls} />}
+  </a>
+) : (
+  <button type="button" data-event={dataEvent} class={cls}>
+    <span><slot /></span>
+    {icon && <Icon name={icon} size={icon === "arrow-right" ? 17 : 16} class={arrowCls} />}
+  </button>
+)}

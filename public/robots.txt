@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /multumim
+
+Sitemap: https://tudor-doc-vet.vercel.app/sitemap-index.xml

@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/bricolage-grotesque/wght.css";
+@import "@fontsource-variable/figtree/wght.css";
+
+@theme {
+  /* ── Culoare ──────────────────────────────────────────────────
+     Din logo: indigo regal + un singur accent galben marigold.
+     Neutrele sunt calde (crem), nu alb clinic, ca site-ul să respire
+     căldură fără să pară rece de cabinet. Contrast AA verificat. */
+
+  /* Neutre calde — fundaluri și carduri */
+  --color-cream: #fbf8f1;   /* fundal principal */
+  --color-ivory: #f5efe1;   /* secțiune alternată deschisă */
+  --color-sand:  #efe6d3;   /* carduri, panouri */
+  --color-oat:   #e7dcc2;   /* bandă mai caldă */
+  --color-line:  #e4dac4;   /* borduri pe fundal cald */
+
+  /* Indigo — text și scene închise */
+  --color-ink:         #1b1a4e; /* text principal / near-black indigo */
+  --color-slate:       #55536e; /* text secundar pe crem (AA pe cream) */
+  --color-indigo:      #2e2a8c; /* albastrul de brand */
+  --color-indigo-deep: #1c1a5a; /* fundal scenă închisă */
+  --color-indigo-line: #3d3a94; /* bordură pe scenă închisă */
+
+  /* Accent unic — galben marigold (temperat, nu neon) */
+  --color-sun:      #f5c518; /* CTA bg (cu text indigo), detalii */
+  --color-sun-deep: #e0ad00; /* hover / bordură accent pe deschis */
+  --color-sun-soft: #fbe7a8; /* fundal foarte discret pentru highlight */
+
+  /* Suprafață rece — periwinkle-crem, pentru ritmul secțiunilor (à la Bond Vet / Modern Animal) */
+  --color-mist:      #edecf9;
+  --color-mist-line: #dcd9f2;
+
+  /* ── Tipografie ── */
+  --font-display: "Bricolage Grotesque Variable", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree Variable", system-ui, -apple-system, sans-serif;
+
+  --text-display: clamp(2.7rem, 1.35rem + 5.4vw, 5.3rem);
+  --text-h1: clamp(2.2rem, 1.35rem + 3.3vw, 4rem);
+  --text-h2: clamp(1.75rem, 1.2rem + 2.1vw, 2.85rem);
+  --text-h3: clamp(1.22rem, 1.05rem + 0.75vw, 1.6rem);
+  --text-lead: clamp(1.08rem, 1rem + 0.42vw, 1.32rem);
+  --text-base: 1.0625rem;
+  --text-sm: 0.9rem;
+  --text-eyebrow: 0.72rem;
+
+  /* ── Ritm vertical: aceeași scară pentru toate secțiunile ── */
+  --spacing-section: clamp(4rem, 2.4rem + 6vw, 7.5rem);
+  --spacing-gutter: clamp(1.25rem, 0.6rem + 2.2vw, 2.25rem);
+
+  /* Rotunjire prietenoasă, consecventă */
+  --radius-card: clamp(1.35rem, 2.4vw, 2.25rem);
+  --radius-media: clamp(1.6rem, 3vw, 2.75rem);
+
+  --shadow-soft: 0 1px 2px rgba(27, 26, 78, 0.06), 0 12px 30px -16px rgba(27, 26, 78, 0.22);
+  --shadow-lift: 0 30px 66px -30px rgba(27, 26, 78, 0.38);
+
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.68;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h3 { line-height: 1.1; letter-spacing: -0.012em; }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: var(--color-sun);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-indigo);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Ancorele nu ajung sub bara fixă */
+  :target { scroll-margin-top: 6rem; }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Măsură de lectură — un rând nu depășește ~64 de caractere */
+@utility measure {
+  max-width: 34em;
+}
+@utility measure-tight {
+  max-width: 27em;
+}
+
+@utility eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-indigo);
+}
+
+/* Tratament unitar pentru orice media (foto reală sau panou de brand) */
+.media-rounded {
+  border-radius: var(--radius-media);
+  overflow: hidden;
+}
+
+/* ── Marker galben pe un cuvânt-cheie (motiv GoodVets) ── */
+.hl {
+  background-image: linear-gradient(120deg, var(--color-sun), var(--color-sun));
+  background-repeat: no-repeat;
+  background-position: 0 0.6em;
+  background-size: 100% 0.86em;
+  padding: 0 0.06em;
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* Varianta care „se scrie" la intrarea în viewport */
+.hl-anim { background-size: 0% 0.86em; transition: background-size 0.7s var(--ease-out) 0.15s; }
+.is-visible .hl-anim,
+.hl-anim.is-visible { background-size: 100% 0.86em; }
+.no-js .hl-anim { background-size: 100% 0.86em; }
+
+/* ── Card foto înclinat + backdrop cu labe (motiv Heart + Paw) ── */
+.tilt-card { transform: rotate(-2.2deg); transition: transform 0.4s var(--ease-out); }
+.tilt-card:hover { transform: rotate(0deg); }
+.tilt-card-r { transform: rotate(2deg); transition: transform 0.4s var(--ease-out); }
+.tilt-card-r:hover { transform: rotate(0deg); }
+
+/* ── Marquee CSS (fără JS, fără librării) ── */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-dur, 34s) linear infinite;
+}
+.marquee-mask:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ── Parallax subtil pe media (JS setează --p) ── */
+[data-parallax] { will-change: transform; transform: translate3d(0, var(--p, 0px), 0); }
+
+/* Cifre count-up: aliniere stabilă */
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* ── Hero: intrare editorială în trepte, o singură dată la încărcare ── */
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 1.4rem, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes hero-media-settle {
+  from { transform: scale(1.03); }
+  to { transform: scale(1); }
+}
+[data-hero-reveal] .hero-media {
+  animation: hero-media-settle 1.3s var(--ease-out) both;
+  will-change: transform;
+}
+[data-hero-reveal] .hero-reveal {
+  opacity: 0;
+  animation: hero-in 0.6s var(--ease-out) both;
+  animation-delay: calc(0.06s + var(--hero-step, 0) * 0.1s);
+  will-change: opacity, transform;
+}
+
+/* ── AOS: textele și compozițiile intră o singură dată la scroll ── */
+.reveal,
+.aos-text {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.aos-text:is(h1, h2, h3, h4) {
+  transform: translate3d(0, 34px, 0) scale(0.98);
+}
+.reveal.reveal-text-host {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+.reveal.is-visible,
+.aos-text.is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+/* Fără JS, tot conținutul rămâne vizibil */
+.no-js .reveal,
+.no-js .aos-text {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-hero-reveal] .hero-media,
+  [data-hero-reveal] .hero-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .reveal, .aos-text {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hl-anim { background-size: 100% 0.86em !important; }
+  .tilt-card, .tilt-card-r { transform: none !important; }
+  .marquee-track { animation: none !important; }
+  [data-parallax] { transform: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Secțiunile mult sub fold se randează când se apropie de viewport;
+   primele două rămân complete pentru LCP. */
+main > section:nth-of-type(n + 3) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 820px;
+}

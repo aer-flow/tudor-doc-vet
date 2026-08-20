@@ -1,0 +1,22 @@
+---
+/** Cifră cu count-up la intrarea în viewport (JS în Base). */
+interface Props {
+  value: number;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+  class?: string;
+}
+const { value, suffix = "", decimals = 0, label, class: className = "" } = Astro.props;
+---
+<div class={className}>
+  <p class="font-display text-[2.6rem] font-extrabold leading-none text-ink tabular sm:text-[3.1rem]">
+    <span
+      class="count"
+      data-count={value}
+      data-decimals={decimals}
+      data-suffix={suffix}
+    >{value.toLocaleString("ro-RO", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}</span>
+  </p>
+  <p class="mt-2 text-[0.92rem] leading-snug text-slate">{label}</p>
+</div>

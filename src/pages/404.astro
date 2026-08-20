@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import { NAV, NAP } from "../data/site";
+
+const title = "Pagina nu a fost găsită — Tudor Doc Vet";
+const description = "Pagina căutată nu există. Întoarce-te la pagina principală sau sună-ne.";
+---
+<Base title={title} description={description} noindex={true}>
+  <section class="bg-cream">
+    <div class="container-page flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+      <div class="flex text-sun-deep">
+        <Icon name="paw" size={30} class="text-indigo" />
+      </div>
+      <p class="mt-5 font-display text-[4rem] font-extrabold leading-none text-indigo">404</p>
+      <h1 class="mt-3 text-h2 font-bold text-ink">Am pierdut urma acestei pagini.</h1>
+      <p class="mx-auto mt-4 max-w-md text-lead text-slate">Pagina căutată nu există sau s-a mutat. Hai să te ducem înapoi pe drumul bun.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href="/" variant="primary" icon="arrow-right">Pagina principală</Button>
+        <Button href={`tel:${NAP.phoneE164}`} variant="outline" icon="phone" dataEvent="click_tel">{NAP.phoneDisplay}</Button>
+      </div>
+      <nav class="mt-9 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[0.92rem]" aria-label="Legături utile">
+        {NAV.filter((l) => l.href !== "/").map((link) => (
+          <a href={link.href} class="text-slate underline-offset-2 transition-colors hover:text-indigo hover:underline">{link.short}</a>
+        ))}
+      </nav>
+    </div>
+  </section>
+</Base>

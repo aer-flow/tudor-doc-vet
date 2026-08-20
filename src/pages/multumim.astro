@@ -1,0 +1,26 @@
+---
+import Base from "../layouts/Base.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import PawField from "../components/PawField.astro";
+import { NAP } from "../data/site";
+
+const title = "Mulțumim — Tudor Doc Vet";
+const description = "Am primit cererea ta. Te contactăm în cel mai scurt timp.";
+---
+<Base title={title} description={description} noindex={true}>
+  <section class="relative overflow-hidden bg-indigo-deep text-cream">
+    <PawField class="pointer-events-none absolute inset-0" opacity={0.07} />
+    <div class="container-page relative flex min-h-[62vh] flex-col items-center justify-center py-20 text-center">
+      <span class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-sun text-ink"><Icon name="check" size={32} /></span>
+      <h1 class="mt-7 text-h1 font-extrabold text-cream">Mulțumim! Am primit cererea ta.</h1>
+      <p class="mx-auto mt-4 max-w-lg text-lead text-cream/75">
+        Te contactăm în cel mai scurt timp cu ora potrivită. Dacă nu poate aștepta, sună direct și te așteptăm pregătiți.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună: {NAP.phoneDisplay}</Button>
+        <Button href="/" variant="light" icon="arrow-right">Înapoi la pagina principală</Button>
+      </div>
+    </div>
+  </section>
+</Base>

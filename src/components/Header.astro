@@ -1,0 +1,136 @@
+---
+import { NAV, NAP } from "../data/site";
+import Icon from "./Icon.astro";
+import BrandMark from "./BrandMark.astro";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path.startsWith(href);
+---
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 border-b border-line bg-cream/92 backdrop-blur-md transition-shadow duration-300"
+>
+  <div class="container-page flex h-18 items-center justify-between gap-6">
+    <a href="/" class="flex shrink-0 items-center gap-3 leading-none">
+      <BrandMark size={42} class="rounded-[13px]" />
+      <span class="flex flex-col">
+        <span class="font-display text-[1.24rem] font-extrabold tracking-[-0.02em] text-ink">Tudor Doc Vet</span>
+        <span class="mt-0.5 text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-slate">Cabinet veterinar · Piatra Neamț</span>
+      </span>
+    </a>
+
+    <nav class="hidden lg:block" aria-label="Navigare principală">
+      <ul class="flex items-center gap-8">
+        {NAV.filter((l) => l.href !== "/").map((link) => (
+          <li>
+            <a
+              href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
+              class:list={[
+                "relative text-[0.82rem] font-medium tracking-[0.02em] transition-colors duration-200",
+                "after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-full after:origin-right",
+                "after:scale-x-0 after:bg-sun after:transition-transform after:duration-300 after:ease-out",
+                "hover:after:origin-left hover:after:scale-x-100",
+                isActive(link.href) ? "text-indigo after:origin-left after:scale-x-100" : "text-slate hover:text-indigo",
+              ]}
+            >{link.short}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={`tel:${NAP.phoneE164}`}
+        data-event="click_tel"
+        class="hidden md:inline-flex items-center gap-2 rounded-full bg-sun px-5 py-2.5 text-[0.76rem] font-semibold uppercase tracking-[0.08em] text-ink transition-colors duration-200 hover:bg-sun-deep"
+      >
+        <Icon name="phone" size={15} />
+        {NAP.phoneDisplay}
+      </a>
+
+      <button
+        type="button"
+        id="menu-toggle"
+        class="lg:hidden -mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-200 hover:bg-sand"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="sr-only">Deschide meniul</span>
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-menu" hidden class="fixed inset-0 z-60 bg-cream lg:hidden">
+  <div class="container-page flex h-18 items-center justify-between">
+    <span class="flex items-center gap-2.5">
+      <BrandMark size={36} class="rounded-[11px]" />
+      <span class="font-display text-[1.15rem] font-extrabold text-ink">Tudor Doc Vet</span>
+    </span>
+    <button
+      type="button"
+      id="menu-close"
+      class="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-sand"
+    >
+      <span class="sr-only">Închide meniul</span>
+      <Icon name="close" size={24} />
+    </button>
+  </div>
+  <nav class="container-page mt-6" aria-label="Navigare mobilă">
+    <ul class="flex flex-col divide-y divide-line border-y border-line">
+      {NAV.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+            class:list={[
+              "flex items-center justify-between py-4 font-display text-2xl font-bold transition-colors",
+              isActive(link.href) ? "text-indigo" : "text-ink hover:text-indigo",
+            ]}
+          >
+            {link.label}
+            <Icon name="arrow-right" size={18} class="text-sun-deep" />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      href={`tel:${NAP.phoneE164}`}
+      data-event="click_tel"
+      class="mt-8 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-sun px-7 py-4 text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-ink"
+    >
+      <Icon name="phone" size={16} />
+      Sună: {NAP.phoneDisplay}
+    </a>
+  </nav>
+</div>
+
+<script>
+  const header = document.getElementById("site-header");
+  const onScroll = () =>
+    header?.classList.toggle("shadow-[0_10px_30px_-20px_rgba(27,26,78,0.5)]", window.scrollY > 40);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  const menu = document.getElementById("mobile-menu");
+  const toggle = document.getElementById("menu-toggle");
+  const close = document.getElementById("menu-close");
+
+  const setMenu = (open: boolean) => {
+    if (!menu) return;
+    menu.hidden = !open;
+    toggle?.setAttribute("aria-expanded", String(open));
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (open) menu.querySelector<HTMLAnchorElement>("a")?.focus();
+    else toggle?.focus();
+  };
+
+  toggle?.addEventListener("click", () => setMenu(true));
+  close?.addEventListener("click", () => setMenu(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menu && !menu.hidden) setMenu(false);
+  });
+</script>

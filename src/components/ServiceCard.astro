@@ -1,0 +1,44 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  icon: "stethoscope" | "shield" | "pulse" | "scissors";
+  name: string;
+  body: string;
+  points?: readonly string[];
+  href?: string;
+  class?: string;
+}
+const { icon, name, body, points = [], href, class: className = "" } = Astro.props;
+const Tag = href ? "a" : "div";
+---
+<Tag
+  href={href}
+  class:list={[
+    "group flex h-full flex-col rounded-[var(--radius-card)] border border-line bg-cream p-7 transition-[transform,box-shadow,border-color] duration-200",
+    href && "hover:-translate-y-1 hover:border-indigo/30 hover:shadow-[var(--shadow-soft)]",
+    className,
+  ]}
+>
+  <span class="inline-flex h-13 w-13 items-center justify-center rounded-2xl bg-indigo/8 text-indigo transition-colors duration-200 group-hover:bg-sun group-hover:text-ink">
+    <Icon name={icon} size={26} />
+  </span>
+  <h3 class="mt-5 font-display text-[1.32rem] font-bold text-ink">{name}</h3>
+  <p class="mt-2.5 text-[0.98rem] leading-relaxed text-slate">{body}</p>
+  {points.length > 0 && (
+    <ul class="mt-5 space-y-2.5 border-t border-line pt-5">
+      {points.map((p) => (
+        <li class="flex gap-2.5 text-[0.94rem] text-ink">
+          <Icon name="check" size={18} class="mt-0.5 shrink-0 text-sun-deep" />
+          <span>{p}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+  {href && (
+    <span class="mt-6 inline-flex items-center gap-2 text-[0.8rem] font-semibold uppercase tracking-[0.08em] text-indigo">
+      Detalii
+      <Icon name="arrow-right" size={16} class="transition-transform duration-200 group-hover:translate-x-1" />
+    </span>
+  )}
+</Tag>

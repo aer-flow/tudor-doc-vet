@@ -1,0 +1,110 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import Highlight from "../components/Highlight.astro";
+import PawField from "../components/PawField.astro";
+import WaveDivider from "../components/WaveDivider.astro";
+import { SITE_URL, NAP, SERVICES, WHATSAPP_URL } from "../data/site";
+
+const title = "Servicii veterinare în Piatra Neamț | Tudor Doc Vet";
+const description =
+  "Consultații, vaccinări, sterilizări, microcipări, tratamente și tunsori igienice pentru câini, pisici și animale de fermă. La cabinet sau la domiciliu în Piatra Neamț.";
+
+const goodToKnow: Record<string, string> = {
+  consultatii: "Adu carnetul de sănătate dacă îl ai. Consultul se poate face și la tine acasă.",
+  vaccinari: "Vaccinăm animalele sănătoase; dacă are simptome, facem întâi un consult. Îți reamintim de rapel.",
+  sterilizari: "Ține animalul nemâncat înainte de intervenție, după indicațiile noastre. Îți spunem exact cum.",
+  microcipari: "Durează câteva minute și e obligatoriu pentru pașaport și călătorii în străinătate.",
+  tratamente: "Spune-ne ce simptome ai observat și de când. Ne ajută să alegem tratamentul potrivit.",
+  "tunsori-igienice": "Programează din timp, mai ales în weekend. Spune-ne rasa și cum ai vrea tunsoarea.",
+};
+
+const serviceSchema = SERVICES.map((s) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: s.name,
+  serviceType: s.name,
+  provider: { "@id": `${SITE_URL}/#cabinet` },
+  areaServed: { "@type": "City", name: "Piatra Neamț" },
+  description: s.body,
+}));
+---
+<Base title={title} description={description} schema={serviceSchema}>
+  <!-- Hero pagină -->
+  <section class="relative overflow-hidden bg-indigo-deep text-cream">
+    <PawField class="pointer-events-none absolute inset-0" opacity={0.07} />
+    <div class="container-page relative py-16 md:py-20">
+      <p class="eyebrow flex items-center gap-2 text-sun"><Icon name="stethoscope" size={14} /> Servicii</p>
+      <h1 class="mt-4 max-w-3xl text-h1 font-extrabold text-cream">
+        Îngrijire completă, pentru <Highlight>companie și fermă</Highlight>.
+      </h1>
+      <p class="measure mt-5 text-lead text-cream/78">
+        De la controale de rutină la sterilizări și microcipări. La cabinet, în centrul Piatra Neamț, sau acasă la tine.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-2.5">
+        {SERVICES.map((s) => (
+          <a href={`#${s.id}`} class="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-[0.86rem] font-medium text-cream/85 transition-colors hover:border-sun hover:text-sun">
+            <Icon name={s.icon} size={16} /> {s.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {SERVICES.map((s, i) => (
+    <>
+      <Section tone={i % 2 === 0 ? "cream" : "ivory"} id={s.id} class="scroll-mt-24">
+        <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+          <div>
+            <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo/8 text-indigo">
+              <Icon name={s.icon} size={28} />
+            </span>
+            <h2 class="mt-5 text-h2 font-bold text-ink">{s.name}</h2>
+            <p class="measure mt-3 text-lead text-slate">{s.lead}</p>
+            <p class="measure mt-4 text-[1.02rem] leading-relaxed text-ink">{s.body}</p>
+            <ul class="mt-7 grid gap-3 sm:grid-cols-2">
+              {s.points.map((p) => (
+                <li class="flex gap-2.5 text-[0.96rem] text-ink">
+                  <Icon name="check" size={18} class="mt-0.5 shrink-0 text-sun-deep" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Programează</Button>
+              <Button href="/contact/#programare" variant="outline" icon="arrow-right">Cere o programare</Button>
+            </div>
+          </div>
+
+          <aside class="lg:pt-2">
+            <div class="rounded-[var(--radius-card)] border border-line bg-sand p-7">
+              <p class="flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo">
+                <Icon name="paw" size={15} /> Bun de știut
+              </p>
+              <p class="mt-3 text-[0.98rem] leading-relaxed text-ink">{goodToKnow[s.id]}</p>
+            </div>
+          </aside>
+        </div>
+      </Section>
+      {i % 2 === 0 && i < SERVICES.length - 1 && (
+        <WaveDivider top="var(--color-cream)" bottom="var(--color-ivory)" variant="wave" />
+      )}
+    </>
+  ))}
+
+  <!-- CTA -->
+  <Section tone="deep" class="relative overflow-hidden">
+    <PawField class="pointer-events-none absolute inset-0" opacity={0.07} />
+    <div class="relative mx-auto max-w-2xl text-center">
+      <h2 class="text-h2 font-bold text-cream">Nu ești sigur de ce are nevoie animalul tău?</h2>
+      <p class="mx-auto mt-4 max-w-lg text-lead text-cream/75">Sună-ne și îți spunem. Un telefon scurt clarifică de multe ori mai mult decât o căutare pe internet.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href={`tel:${NAP.phoneE164}`} variant="primary" icon="phone" dataEvent="click_tel">Sună: {NAP.phoneDisplay}</Button>
+        <Button href={WHATSAPP_URL} variant="light" icon="whatsapp" external dataEvent="click_whatsapp">Scrie pe WhatsApp</Button>
+      </div>
+    </div>
+  </Section>
+</Base>

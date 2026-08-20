@@ -1,0 +1,6 @@
+---
+/** Marker galben pe un cuvânt-cheie. `anim` îl „scrie" la intrarea în viewport. */
+interface Props { anim?: boolean; class?: string }
+const { anim = false, class: className = "" } = Astro.props;
+---
+<span class:list={["hl", anim && "hl-anim reveal", className]}><slot /></span>

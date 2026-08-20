@@ -1,0 +1,128 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import Highlight from "../components/Highlight.astro";
+import PawTrail from "../components/PawTrail.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+
+const title = "Design system — Tudor Doc Vet";
+const description = "Sistemul de design al site-ului Tudor Doc Vet: culoare, tipografie, componente.";
+
+const colors = [
+  { name: "cream", hex: "#fbf8f1", note: "Fundal principal" },
+  { name: "ivory", hex: "#f5efe1", note: "Secțiune alternată" },
+  { name: "sand", hex: "#efe6d3", note: "Carduri, panouri" },
+  { name: "oat", hex: "#e7dcc2", note: "Bandă caldă" },
+  { name: "line", hex: "#e4dac4", note: "Borduri" },
+  { name: "ink", hex: "#1b1a4e", note: "Text principal" },
+  { name: "slate", hex: "#55536e", note: "Text secundar" },
+  { name: "indigo", hex: "#2e2a8c", note: "Albastru de brand" },
+  { name: "indigo-deep", hex: "#1c1a5a", note: "Scene închise" },
+  { name: "mist", hex: "#edecf9", note: "Suprafață rece, ritm" },
+  { name: "sun", hex: "#f5c518", note: "Accent unic — CTA" },
+  { name: "sun-deep", hex: "#e0ad00", note: "Accent hover" },
+];
+
+const icons = [
+  "stethoscope", "syringe", "scalpel", "microchip", "pill", "scissors",
+  "home", "barn", "paw", "heart", "star", "check", "clock", "map-pin", "phone", "whatsapp",
+] as const;
+
+const type = [
+  { label: "Display", cls: "text-display", sample: "Tudor Doc Vet" },
+  { label: "H1", cls: "text-h1", sample: "Grijă pentru animalul tău" },
+  { label: "H2", cls: "text-h2", sample: "Servicii veterinare" },
+  { label: "H3", cls: "text-h3", sample: "Consultații și diagnostic" },
+  { label: "Lead", cls: "text-lead font-body", sample: "Un consult atent, cu explicații pe înțelesul tău." },
+];
+---
+<Base title={title} description={description} noindex={true}>
+  <Section tone="cream">
+    <Eyebrow>Design system</Eyebrow>
+    <h1 class="text-h1 font-extrabold text-ink">Tudor Doc Vet — sistemul de design</h1>
+    <p class="measure mt-4 text-lead text-slate">Sursa vizuală din care pornesc toate paginile. Pagină internă, exclusă din indexare și sitemap.</p>
+  </Section>
+
+  <!-- Culoare -->
+  <Section tone="ivory">
+    <h2 class="text-h2 font-bold text-ink">Culoare</h2>
+    <p class="measure mt-3 text-slate">Neutre calde + indigo de brand + un singur accent galben marigold, folosit cu zgârcenie.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {colors.map((c) => (
+        <div class="overflow-hidden rounded-2xl border border-line bg-cream">
+          <div class="h-20 w-full" style={`background:${c.hex}`}></div>
+          <div class="p-4">
+            <p class="font-mono text-[0.8rem] font-semibold text-ink">{c.hex}</p>
+            <p class="text-[0.84rem] text-slate">{c.name} — {c.note}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Tipografie -->
+  <Section tone="cream">
+    <h2 class="text-h2 font-bold text-ink">Tipografie</h2>
+    <p class="measure mt-3 text-slate">Display: Bricolage Grotesque. Text: Figtree. Diacritice românești: ăâîșț ĂÂÎȘȚ.</p>
+    <div class="mt-8 space-y-6 border-t border-line pt-8">
+      {type.map((t) => (
+        <div class="grid gap-2 sm:grid-cols-[120px_1fr] sm:items-baseline">
+          <span class="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo">{t.label}</span>
+          <span class={`${t.cls} text-ink`} style={t.label === "Lead" ? "" : "font-family:var(--font-display);font-weight:700"}>{t.sample}</span>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Butoane -->
+  <Section tone="ivory">
+    <h2 class="text-h2 font-bold text-ink">Butoane</h2>
+    <div class="mt-8 flex flex-wrap items-center gap-4">
+      <Button variant="primary" icon="calendar">Programează</Button>
+      <Button variant="indigo" icon="arrow-right">Vezi serviciile</Button>
+      <Button variant="outline" icon="phone">Sună acum</Button>
+      <Button variant="quiet" icon="arrow-right">Secundar</Button>
+    </div>
+    <div class="mt-6 rounded-[var(--radius-card)] bg-indigo-deep p-8">
+      <Button variant="light" icon="whatsapp">Pe scenă închisă</Button>
+    </div>
+  </Section>
+
+  <!-- Iconografie -->
+  <Section tone="cream">
+    <h2 class="text-h2 font-bold text-ink">Iconografie</h2>
+    <p class="measure mt-3 text-slate">Un singur set, aceeași grosime de linie (1,6), aceeași dimensiune de bază.</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      {icons.map((n) => (
+        <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-line bg-sand text-indigo">
+          <Icon name={n} size={24} />
+        </span>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Efecte & motion -->
+  <Section tone="mist">
+    <h2 class="text-h2 font-bold text-ink">Efecte & motion</h2>
+    <p class="measure mt-3 text-slate">Marker galben pe cuvânt-cheie, urmă de labe, reveal fade-up cu stagger, count-up pe cifre, marquee, parallax subtil. Toate respectă <code>prefers-reduced-motion</code>.</p>
+    <p class="mt-8 font-display text-[2rem] font-bold text-ink">Grijă <Highlight>oriunde ai nevoie</Highlight>.</p>
+    <PawTrail class="mt-8" />
+  </Section>
+
+  <!-- Card -->
+  <Section tone="ivory">
+    <h2 class="text-h2 font-bold text-ink">Card de serviciu</h2>
+    <div class="mt-8 max-w-sm">
+      <ServiceCard
+        icon="stethoscope"
+        name="Consultații & diagnostic"
+        body="Consult complet, cu timp să întrebi tot ce te frământă."
+        points={["Control de rutină", "Explicații clare", "Plan de tratament"]}
+        href="/servicii/#consultatii"
+      />
+    </div>
+  </Section>
+</Base>

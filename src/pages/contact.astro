@@ -1,0 +1,214 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+import Eyebrow from "../components/Eyebrow.astro";
+import PageHero from "../components/PageHero.astro";
+import { BRAND, NAP, SCHEDULE, MAPS_URL, WHATSAPP_URL } from "../data/site";
+
+const title = "Contact & programări — Tudor Doc Vet, Piatra Neamț";
+const description =
+  "Programează o vizită la Tudor Doc Vet, Piatra Neamț. Telefon 0740 318 815, WhatsApp, str. Pictor Nicolae Grigorescu 12. Program extins, urgențe la telefon.";
+
+// Embed Google Maps fără cheie (facade — se încarcă la click).
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
+  "Tudor Doc-Vet, Strada Pictor Nicolae Grigorescu 12, Piatra Neamt",
+)}&output=embed`;
+---
+<Base title={title} description={description}>
+  <PageHero
+    eyebrow="Contact"
+    title="Programează o vizită sau întreabă-ne orice."
+    lead="Cel mai rapid ne prinzi la telefon. Pentru situații care nu pot aștepta, sună direct și te așteptăm pregătiți."
+  />
+
+  <Section tone="cream" id="programare" class="scroll-mt-24">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+      <!-- Contact direct -->
+      <div>
+        <Eyebrow>Date de contact</Eyebrow>
+        <h2 class="text-h2 font-bold text-ink">Vorbește cu noi.</h2>
+
+        <a
+          href={`tel:${NAP.phoneE164}`}
+          data-event="click_tel"
+          class="mt-7 flex items-center gap-4 rounded-[var(--radius-card)] border border-line bg-sand p-6 transition-colors hover:border-indigo/40"
+        >
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sun text-ink"><Icon name="phone" size={22} /></span>
+          <span>
+            <span class="block text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo">Sună acum</span>
+            <span class="mt-0.5 block font-display text-[1.5rem] font-bold text-ink">{NAP.phoneDisplay}</span>
+          </span>
+        </a>
+
+        <ul class="mt-5 space-y-3.5 text-[1rem]">
+          <li>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-event="click_whatsapp" class="flex items-center gap-3 text-ink transition-colors hover:text-indigo">
+              <Icon name="whatsapp" size={20} class="text-slate" /> Scrie-ne pe WhatsApp
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${NAP.email}`} class="flex items-center gap-3 text-ink transition-colors hover:text-indigo">
+              <Icon name="mail" size={20} class="text-slate" /> {NAP.email}
+            </a>
+          </li>
+          <li class="flex items-start gap-3 text-ink">
+            <Icon name="map-pin" size={20} class="mt-0.5 text-slate" />
+            <span>{NAP.street}<br />{NAP.postalCode} {NAP.city}, jud. {NAP.region}</span>
+          </li>
+        </ul>
+
+        <div class="mt-7 rounded-[var(--radius-card)] border border-line bg-ivory p-6">
+          <p class="flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-indigo">
+            <Icon name="clock" size={15} /> Program
+          </p>
+          <dl class="mt-3 divide-y divide-line">
+            {SCHEDULE.groups.map((g) => (
+              <div class="flex items-center justify-between py-2.5">
+                <dt class="text-[0.96rem] text-slate">{g.label}</dt>
+                <dd class="text-[0.96rem] font-semibold text-ink">{g.hours}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="mt-3 text-[0.88rem] text-slate">{SCHEDULE.note}</p>
+        </div>
+      </div>
+
+      <!-- Formular -> compune mesaj WhatsApp -->
+      <div class="rounded-[var(--radius-media)] border border-line bg-ivory p-7 sm:p-9">
+        <h2 class="font-display text-[1.5rem] font-bold text-ink">Cere o programare</h2>
+        <p class="mt-2 text-[0.96rem] text-slate">Completează pe scurt și trimitem detaliile pe WhatsApp. Îți răspundem cu ora potrivită.</p>
+
+        <form id="cerere-form" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="nume" class="block text-[0.86rem] font-semibold text-ink">Numele tău</label>
+            <input id="nume" name="nume" type="text" required autocomplete="name"
+              class="mt-2 w-full rounded-xl border border-line bg-cream px-4 py-3 text-ink outline-none transition-colors placeholder:text-slate/60 focus:border-indigo" placeholder="Ex: Andrei Popescu" />
+            <p class="field-error mt-1.5 hidden text-[0.82rem] text-indigo" data-for="nume">Te rugăm să completezi numele.</p>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="telefon" class="block text-[0.86rem] font-semibold text-ink">Telefon</label>
+              <input id="telefon" name="telefon" type="tel" required autocomplete="tel" inputmode="tel"
+                class="mt-2 w-full rounded-xl border border-line bg-cream px-4 py-3 text-ink outline-none transition-colors placeholder:text-slate/60 focus:border-indigo" placeholder="07xx xxx xxx" />
+              <p class="field-error mt-1.5 hidden text-[0.82rem] text-indigo" data-for="telefon">Adaugă un număr de telefon valid.</p>
+            </div>
+            <div>
+              <label for="animal" class="block text-[0.86rem] font-semibold text-ink">Animalul</label>
+              <select id="animal" name="animal"
+                class="mt-2 w-full rounded-xl border border-line bg-cream px-4 py-3 text-ink outline-none transition-colors focus:border-indigo">
+                <option value="Câine">Câine</option>
+                <option value="Pisică">Pisică</option>
+                <option value="Altul">Altul</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="mesaj" class="block text-[0.86rem] font-semibold text-ink">Cu ce te putem ajuta?</label>
+            <textarea id="mesaj" name="mesaj" rows="4"
+              class="mt-2 w-full rounded-xl border border-line bg-cream px-4 py-3 text-ink outline-none transition-colors placeholder:text-slate/60 focus:border-indigo" placeholder="Ex: consult de rutină, vaccinare, o îngrijorare anume…"></textarea>
+          </div>
+
+          <!-- Anti-spam: honeypot -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label for="companie">Nu completa</label>
+            <input id="companie" name="companie" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button
+            type="submit"
+            class="group inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-sun px-7 py-4 text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-ink transition-colors duration-200 hover:bg-sun-deep sm:w-auto"
+          >
+            <Icon name="whatsapp" size={17} />
+            Trimite pe WhatsApp
+          </button>
+          <p class="text-[0.82rem] text-slate">Preferi să vorbești direct? Sună la <a href={`tel:${NAP.phoneE164}`} data-event="click_tel" class="font-semibold text-indigo underline-offset-2 hover:underline">{NAP.phoneDisplay}</a>.</p>
+        </form>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Hartă (facade — se încarcă la click) -->
+  <Section tone="ivory" class="!pt-0">
+    <div class="overflow-hidden rounded-[var(--radius-media)] border border-line">
+      <button
+        id="map-facade"
+        type="button"
+        data-embed={mapEmbed}
+        class="group relative flex aspect-[16/9] w-full items-center justify-center bg-sand sm:aspect-[21/9]"
+        aria-label="Încarcă harta cu locația cabinetului"
+      >
+        <span class="pointer-events-none flex flex-col items-center gap-3 text-center">
+          <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-indigo text-cream shadow-[var(--shadow-soft)] transition-transform duration-200 group-hover:scale-105"><Icon name="map-pin" size={26} /></span>
+          <span class="font-display text-[1.16rem] font-bold text-ink">{BRAND.legalName}</span>
+          <span class="text-[0.92rem] text-slate">{NAP.street}, {NAP.city}</span>
+          <span class="mt-1 inline-flex items-center gap-1.5 text-[0.78rem] font-semibold uppercase tracking-[0.08em] text-indigo">Vezi pe hartă <Icon name="arrow-right" size={15} /></span>
+        </span>
+      </button>
+    </div>
+    <p class="mt-4 text-center text-[0.9rem] text-slate">
+      Sau <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" class="font-semibold text-indigo underline-offset-2 hover:underline">deschide direct în Google Maps</a>.
+    </p>
+  </Section>
+
+  <script is:inline define:vars={{ waBase: "https://wa.me/40740318815" }}>
+    // Formular -> compune un mesaj WhatsApp curat din câmpuri.
+    const form = document.getElementById("cerere-form");
+    const showError = (name, on) => {
+      const el = document.querySelector(`.field-error[data-for="${name}"]`);
+      const input = document.getElementById(name);
+      if (el) el.classList.toggle("hidden", !on);
+      if (input) input.classList.toggle("border-indigo", on);
+    };
+
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      if (data.get("companie")) return; // honeypot
+
+      const nume = String(data.get("nume") || "").trim();
+      const tel = String(data.get("telefon") || "").trim();
+      const okNume = nume.length >= 2;
+      const okTel = tel.replace(/\D/g, "").length >= 9;
+      showError("nume", !okNume);
+      showError("telefon", !okTel);
+      if (!okNume || !okTel) {
+        document.getElementById(!okNume ? "nume" : "telefon")?.focus();
+        return;
+      }
+
+      const animal = String(data.get("animal") || "");
+      const mesaj = String(data.get("mesaj") || "").trim();
+      const text =
+        `Bună ziua! Aș dori o programare la Tudor Doc Vet.%0A` +
+        `Nume: ${encodeURIComponent(nume)}%0A` +
+        `Telefon: ${encodeURIComponent(tel)}%0A` +
+        `Animal: ${encodeURIComponent(animal)}` +
+        (mesaj ? `%0AMesaj: ${encodeURIComponent(mesaj)}` : "");
+
+      if (window.gtag) window.gtag("event", "form_submit", { method: "whatsapp" });
+      window.open(`${waBase}?text=${text}`, "_blank", "noopener");
+    });
+
+    // Facade hartă
+    const facade = document.getElementById("map-facade");
+    facade?.addEventListener("click", () => {
+      const src = facade.getAttribute("data-embed");
+      const iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.title = "Hartă — Tudor Doc Vet, Piatra Neamț";
+      iframe.loading = "lazy";
+      iframe.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+      iframe.className = "h-full w-full border-0";
+      iframe.style.aspectRatio = facade.style.aspectRatio || "";
+      const wrap = facade.parentElement;
+      if (wrap) {
+        wrap.style.aspectRatio = "16 / 9";
+        wrap.innerHTML = "";
+        wrap.appendChild(iframe);
+      }
+    });
+  </script>
+</Base>

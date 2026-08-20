@@ -1,0 +1,29 @@
+---
+import { NAP, WHATSAPP_URL } from "../data/site";
+import Icon from "./Icon.astro";
+---
+<div
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-cream/96 backdrop-blur-md lg:hidden"
+  style="padding-bottom:env(safe-area-inset-bottom)"
+>
+  <div class="grid grid-cols-2 gap-2 px-3 py-2.5">
+    <a
+      href={`tel:${NAP.phoneE164}`}
+      data-event="click_tel"
+      class="inline-flex items-center justify-center gap-2 rounded-full bg-sun px-4 py-3 text-[0.8rem] font-semibold uppercase tracking-[0.08em] text-ink"
+    >
+      <Icon name="phone" size={16} />
+      Sună acum
+    </a>
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-event="click_whatsapp"
+      class="inline-flex items-center justify-center gap-2 rounded-full border border-indigo/30 px-4 py-3 text-[0.8rem] font-semibold uppercase tracking-[0.08em] text-indigo"
+    >
+      <Icon name="whatsapp" size={16} />
+      WhatsApp
+    </a>
+  </div>
+</div>

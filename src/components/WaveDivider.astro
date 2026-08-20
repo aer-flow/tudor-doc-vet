@@ -1,0 +1,35 @@
+---
+/**
+ * Separator organic între două tonuri. `top` = culoarea secțiunii de deasupra,
+ * `bottom` = culoarea secțiunii de dedesubt. Curba face tranziția lină.
+ */
+interface Props {
+  top?: string;
+  bottom?: string;
+  variant?: "wave" | "slope" | "arch";
+  height?: number;
+  class?: string;
+}
+const {
+  top = "var(--color-cream)",
+  bottom = "var(--color-ivory)",
+  variant = "wave",
+  height = 64,
+  class: className = "",
+} = Astro.props;
+
+const paths = {
+  wave: "M0,0 L1440,0 L1440,34 C1200,70 960,6 720,40 C480,74 240,10 0,44 Z",
+  slope: "M0,0 L1440,0 L1440,20 C980,66 480,66 0,58 Z",
+  arch: "M0,0 L1440,0 L1440,30 C1080,74 360,74 0,30 Z",
+};
+---
+<div class:list={["w-full leading-[0]", className]} style={`background:${bottom}`} aria-hidden="true">
+  <svg
+    viewBox="0 0 1440 74"
+    preserveAspectRatio="none"
+    style={`display:block;width:100%;height:${height}px`}
+  >
+    <path d={paths[variant]} fill={top}></path>
+  </svg>
+</div>
