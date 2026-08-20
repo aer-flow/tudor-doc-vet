@@ -7,7 +7,7 @@ import Button from "../components/Button.astro";
 import Eyebrow from "../components/Eyebrow.astro";
 import Icon from "../components/Icon.astro";
 import Highlight from "../components/Highlight.astro";
-import CareLine from "../components/CareLine.astro";
+import HeroScene from "../components/HeroScene.astro";
 import Stat from "../components/Stat.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import PawField from "../components/PawField.astro";
@@ -40,9 +40,6 @@ const faqSchema = {
 <Base title={title} description={description} schema={faqSchema}>
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section data-hero-reveal class="relative overflow-hidden bg-cream">
-    <div class="pointer-events-none absolute inset-0" data-parallax="0.05">
-      <CareLine class="opacity-70" />
-    </div>
     <div class="container-page relative z-10 grid items-center gap-12 py-12 md:py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-20">
       <div class="max-w-xl">
         <p class="hero-reveal eyebrow flex items-center gap-2" style="--hero-step:0">
@@ -76,24 +73,26 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Compoziția de brand cu parallax subtil. Sloturile de foto reală vin aici. -->
+      <!-- Scena-semnătură: câine + pisică în line-art care se desenează. -->
       <div class="hero-media relative">
-        <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep px-6 py-10 sm:px-10">
-          <PawField class="pointer-events-none absolute inset-0" />
-          <div class="relative mx-auto max-w-[320px]" data-parallax="0.06">
-            <div class="rounded-3xl bg-white p-6 shadow-[var(--shadow-lift)]">
-              <Image
-                src={logo}
-                alt="Tudor Doc Vet, cabinet veterinar în Piatra Neamț"
-                width={360}
-                height={360}
-                densities={[1, 2]}
-                loading="eager"
-                fetchpriority="high"
-                class="mx-auto h-auto w-full rounded-2xl object-contain"
-              />
+        <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep px-6 py-8 sm:px-9">
+          <PawField class="pointer-events-none absolute inset-0" opacity={0.06} />
+          <div class="relative">
+            <div class="flex items-center justify-between gap-3">
+              <span class="inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-1.5 pr-3.5 shadow-[var(--shadow-soft)]">
+                <Image src={logo} alt="Tudor Doc Vet" width={30} height={30} class="h-7 w-7 rounded-full object-contain" loading="eager" />
+                <span class="text-[0.74rem] font-extrabold tracking-tight text-indigo">Tudor Doc Vet</span>
+              </span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-[0.74rem] font-medium text-cream">
+                <Icon name="star" size={13} class="text-sun" /> 4,5 · Google
+              </span>
             </div>
-            <div class="mt-5 grid grid-cols-2 gap-3">
+
+            <div class="py-3" data-parallax="0.05">
+              <HeroScene />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
               <div class="rounded-2xl bg-cream/95 px-4 py-3.5">
                 <p class="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-indigo">
                   <Icon name="clock" size={13} /> Program
