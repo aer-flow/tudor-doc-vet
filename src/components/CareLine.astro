@@ -1,0 +1,63 @@
+---
+/**
+ * Momentul-semnătură: o linie continuă care se desenează singură, șerpuiește
+ * prin hero, are un puls ECG și lasă urme de labe care apar în secvență.
+ * O a doua linie (indigo) se întrepătrunde cu prima. Pur SVG + CSS.
+ */
+interface Props { class?: string }
+const { class: className = "" } = Astro.props;
+
+const paw =
+  '<ellipse cx="6.4" cy="11" rx="1.9" ry="2.3"/><ellipse cx="9.7" cy="6.6" rx="1.9" ry="2.4"/><ellipse cx="14.3" cy="6.6" rx="1.9" ry="2.4"/><ellipse cx="17.6" cy="11" rx="1.9" ry="2.3"/><path d="M12 12.4c-2.7 0-4.8 1.9-4.8 4.2 0 1.7 1.4 2.7 3.1 2.7.9 0 1.2-.3 1.7-.3s.8.3 1.7.3c1.7 0 3.1-1 3.1-2.7 0-2.3-2.1-4.2-4.8-4.2Z"/>';
+
+// Poziții de labe de-a lungul curbei (aprox. pe traseu)
+const paws = [
+  { x: 250, y: 322, r: -14, i: 0, o: 0.9 },
+  { x: 470, y: 214, r: 10, i: 1, o: 0.85 },
+  { x: 930, y: 262, r: -8, i: 2, o: 0.8 },
+  { x: 1130, y: 176, r: 14, i: 3, o: 0.7 },
+];
+---
+<svg
+  class:list={["pointer-events-none absolute inset-0 h-full w-full", className]}
+  viewBox="0 0 1200 500"
+  fill="none"
+  preserveAspectRatio="xMidYMid meet"
+  aria-hidden="true"
+>
+  <!-- Linia companioană indigo, se întrepătrunde (se trasează prima, subțire) -->
+  <path
+    class="draw-path"
+    style="--draw-i:0"
+    pathLength="1"
+    d="M-30,300 C 230,300 300,150 470,150 C 620,150 660,214 740,214 L 1230,206"
+    stroke="var(--color-indigo)"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    opacity="0.28"
+  ></path>
+
+  <!-- Linia principală marigold, cu puls ECG (se trasează a doua) -->
+  <path
+    class="draw-path pulse-glow"
+    style="--draw-i:1"
+    pathLength="1"
+    d="M-30,360 C 180,360 250,182 430,182 C 525,182 565,250 645,250 L 690,250 L 707,205 L 723,300 L 741,150 L 757,250 L 1000,250 C 1120,250 1165,188 1240,150"
+    stroke="var(--color-sun)"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  ></path>
+
+  <!-- Urme de labe care apar în secvență de-a lungul liniei -->
+  <g fill="var(--color-sun-deep)">
+    {paws.map((p) => (
+      <g
+        class="paw-stamp"
+        style={`--paw-i:${p.i};--paw-o:${p.o}`}
+        transform={`translate(${p.x} ${p.y}) rotate(${p.r}) scale(1.5) translate(-12 -12)`}
+        set:html={paw}
+      />
+    ))}
+  </g>
+</svg>

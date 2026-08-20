@@ -7,6 +7,7 @@ import Button from "../components/Button.astro";
 import Eyebrow from "../components/Eyebrow.astro";
 import Icon from "../components/Icon.astro";
 import Highlight from "../components/Highlight.astro";
+import CareLine from "../components/CareLine.astro";
 import Stat from "../components/Stat.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import PawField from "../components/PawField.astro";
@@ -39,13 +40,18 @@ const faqSchema = {
 <Base title={title} description={description} schema={faqSchema}>
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section data-hero-reveal class="relative overflow-hidden bg-cream">
-    <div class="container-page grid items-center gap-12 py-12 md:py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-20">
+    <div class="pointer-events-none absolute inset-0" data-parallax="0.05">
+      <CareLine class="opacity-70" />
+    </div>
+    <div class="container-page relative z-10 grid items-center gap-12 py-12 md:py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-20">
       <div class="max-w-xl">
         <p class="hero-reveal eyebrow flex items-center gap-2" style="--hero-step:0">
           <Icon name="map-pin" size={14} /> Piatra Neamț · La cabinet și la domiciliu
         </p>
-        <h1 class="hero-reveal mt-5 text-display font-extrabold leading-[0.98] text-ink" style="--hero-step:1">
-          Grijă adevărată pentru animalul tău, <Highlight>oriunde ai nevoie</Highlight>.
+        <h1 class="mt-5 text-display font-extrabold leading-[0.98] text-ink">
+          <span class="mask-line" style="--i:0"><span>Grijă adevărată</span></span>
+          <span class="mask-line" style="--i:1"><span>pentru animalul tău,</span></span>
+          <span class="mask-line" style="--i:2"><span><Highlight>oriunde ai nevoie</Highlight>.</span></span>
         </h1>
         <p class="hero-reveal measure mt-6 text-lead text-slate" style="--hero-step:2">
           La Tudor Doc Vet îngrijim câini, pisici și animale de fermă, la cabinet în Piatra Neamț sau acasă la tine. Vii cu o grijă, pleci cu un plan.

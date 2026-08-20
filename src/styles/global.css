@@ -173,6 +173,58 @@
 /* Cifre count-up: aliniere stabilă */
 .tabular { font-variant-numeric: tabular-nums; }
 
+/* ── Semnătură: linii SVG care se desenează singure ─────────────
+   Fiecare <path pathLength="1"> pornește „nedesenat" și se trasează. */
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+[data-hero-reveal] .draw-path {
+  animation: draw-on 2s var(--ease-out) forwards;
+  animation-delay: calc(0.35s + var(--draw-i, 0) * 0.5s);
+}
+.is-visible .draw-path,
+.draw-path.is-visible {
+  animation: draw-on 1.6s var(--ease-out) forwards;
+  animation-delay: calc(var(--draw-i, 0) * 0.22s);
+}
+@keyframes draw-on { to { stroke-dashoffset: 0; } }
+.no-js .draw-path { stroke-dashoffset: 0; }
+
+/* Labele care apar în secvență de-a lungul liniei */
+.paw-stamp { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; }
+[data-hero-reveal] .paw-stamp {
+  animation: paw-pop 0.5s var(--ease-out) forwards;
+  animation-delay: calc(0.9s + var(--paw-i, 0) * 0.16s);
+}
+.is-visible .paw-stamp {
+  animation: paw-pop 0.5s var(--ease-out) forwards;
+  animation-delay: calc(var(--paw-i, 0) * 0.12s);
+}
+@keyframes paw-pop { to { opacity: var(--paw-o, 0.9); transform: scale(1); } }
+.no-js .paw-stamp { opacity: var(--paw-o, 0.9); transform: none; }
+
+/* Pulsul ECG din linie: după ce s-a trasat, licărește discret */
+[data-hero-reveal] .pulse-glow { animation: pulse-glow 3.4s ease-in-out 2.4s infinite; }
+@keyframes pulse-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* ── Reveal pe mască: rândurile de titlu urcă din spatele unei linii ── */
+.mask-line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.mask-line > span { display: block; transform: translateY(115%); }
+[data-hero-reveal] .mask-line > span {
+  animation: mask-up 0.9s var(--ease-out) both;
+  animation-delay: calc(0.12s + var(--i, 0) * 0.085s);
+}
+.no-js .mask-line > span { transform: none; }
+@keyframes mask-up { to { transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-path { stroke-dashoffset: 0 !important; animation: none !important; }
+  .paw-stamp { opacity: var(--paw-o, 0.9) !important; transform: none !important; animation: none !important; }
+  .pulse-glow { animation: none !important; }
+  .mask-line > span { transform: none !important; animation: none !important; }
+}
+
 /* ── Hero: intrare editorială în trepte, o singură dată la încărcare ── */
 @keyframes hero-in {
   from { opacity: 0; transform: translate3d(0, 1.4rem, 0); }
