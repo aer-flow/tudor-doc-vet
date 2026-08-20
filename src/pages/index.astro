@@ -1,13 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/logo-tudor-doc-vet.jpg";
+import heroPhoto from "../assets/foto/hero-dog-cat.jpg";
+import vetKitten from "../assets/foto/vet-kitten.jpg";
 import Base from "../layouts/Base.astro";
 import Section from "../components/Section.astro";
 import Button from "../components/Button.astro";
 import Eyebrow from "../components/Eyebrow.astro";
 import Icon from "../components/Icon.astro";
 import Highlight from "../components/Highlight.astro";
-import HeroScene from "../components/HeroScene.astro";
 import Stat from "../components/Stat.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import PawField from "../components/PawField.astro";
@@ -73,47 +73,34 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Scena-semnătură: câine + pisică în line-art care se desenează. -->
+      <!-- Hero photography-led: momentul cald om–animal (foto placeholder, se înlocuiește cu poze reale). -->
       <div class="hero-media relative">
-        <div class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep px-6 py-8 sm:px-9">
-          <PawField class="pointer-events-none absolute inset-0" opacity={0.06} />
-          <div class="relative">
-            <div class="flex items-center justify-between gap-3">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white py-1.5 pl-1.5 pr-3.5 shadow-[var(--shadow-soft)]">
-                <Image src={logo} alt="Tudor Doc Vet" width={30} height={30} class="h-7 w-7 rounded-full object-contain" loading="eager" />
-                <span class="text-[0.74rem] font-extrabold tracking-tight text-indigo">Tudor Doc Vet</span>
-              </span>
-              <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-[0.74rem] font-medium text-cream">
-                <Icon name="star" size={13} class="text-sun" /> 4,5 · Google
-              </span>
-            </div>
-
-            <div class="py-3" data-parallax="0.05">
-              <HeroScene />
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div class="rounded-2xl bg-cream/95 px-4 py-3.5">
-                <p class="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-indigo">
-                  <Icon name="clock" size={13} /> Program
-                </p>
-                <p class="mt-1 text-[0.9rem] font-semibold text-ink">L–V 07–21</p>
-                <p class="text-[0.82rem] text-slate">Weekend 09–17</p>
-              </div>
-              <div class="rounded-2xl bg-sun px-4 py-3.5 text-ink">
-                <p class="flex items-center gap-1.5 text-[0.66rem] font-bold uppercase tracking-[0.12em]">
-                  <Icon name="home" size={13} /> La domiciliu
-                </p>
-                <p class="mt-1 text-[0.9rem] font-semibold">Venim la tine</p>
-                <p class="text-[0.82rem] text-ink/70">În Piatra Neamț</p>
-              </div>
-            </div>
+        <div class="relative overflow-hidden rounded-[var(--radius-media)] shadow-[var(--shadow-lift)]" data-parallax="0.05">
+          <Image
+            src={heroPhoto}
+            alt="Un câine și o pisică odihnindu-se împreună în lumină caldă"
+            widths={[600, 900, 1300]}
+            sizes="(max-width: 1024px) 92vw, 46vw"
+            loading="eager"
+            fetchpriority="high"
+            class="hero-photo aspect-[4/5] w-full object-cover sm:aspect-[5/5] lg:aspect-[4/5]"
+          />
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-ink/55 via-ink/10 to-transparent"></div>
+          <div class="absolute inset-x-4 bottom-4 flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-cream/95 px-3.5 py-2 text-[0.78rem] font-semibold text-ink backdrop-blur">
+              <Icon name="home" size={14} class="text-indigo" /> Venim și la domiciliu
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-sun px-3.5 py-2 text-[0.78rem] font-semibold text-ink">
+              <Icon name="clock" size={14} /> L–V 07–21
+            </span>
           </div>
         </div>
-        <!-- Chip recenzie flotant -->
-        <div class="absolute -bottom-4 -left-3 hidden items-center gap-2.5 rounded-2xl border border-line bg-cream px-4 py-3 shadow-[var(--shadow-soft)] sm:flex lg:-left-6">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sun/20 text-[0.78rem] font-bold text-indigo">C.C.</span>
-          <span class="text-[0.82rem] leading-tight text-ink">„Ne ducem cu <span class="font-semibold">încredere</span>.”<br /><span class="text-slate">Recenzie Google</span></span>
+        <!-- Card rating flotant -->
+        <div class="absolute -left-3 -top-4 hidden items-center gap-3 rounded-2xl border border-line bg-cream px-4 py-3 shadow-[var(--shadow-soft)] sm:flex lg:-left-6">
+          <div class="flex text-sun-deep">
+            {Array.from({ length: 5 }).map(() => <Icon name="star" size={14} />)}
+          </div>
+          <span class="text-[0.82rem] leading-tight text-ink"><span class="font-semibold">4,5</span> pe Google<br /><span class="text-slate">37 de recenzii</span></span>
         </div>
       </div>
     </div>
@@ -245,18 +232,23 @@ const faqSchema = {
         </ul>
       </div>
 
-      <figure class="relative overflow-hidden rounded-[var(--radius-media)] bg-indigo-deep p-8 sm:p-10">
-        <PawField class="pointer-events-none absolute inset-0" opacity={0.08} />
-        <div class="relative flex h-full flex-col justify-center">
-          <Icon name="quote" size={40} class="text-sun" />
-          <blockquote class="mt-5 font-display text-[1.5rem] font-medium leading-snug text-cream sm:text-[1.75rem]">
-            {REVIEWS[1].quote}
-          </blockquote>
-          <figcaption class="mt-6 flex items-center gap-3 text-cream/70">
-            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-sun/18 font-semibold text-sun">{REVIEWS[1].author}</span>
-            <span class="text-[0.9rem]">Recenzie Google · Piatra Neamț</span>
-          </figcaption>
-        </div>
+      <figure class="relative overflow-hidden rounded-[var(--radius-media)] shadow-[var(--shadow-lift)]">
+        <Image
+          src={vetKitten}
+          alt="Veterinar examinând cu grijă un pisoi cu stetoscopul"
+          widths={[500, 800]}
+          sizes="(max-width: 1024px) 92vw, 46vw"
+          loading="lazy"
+          class="aspect-[4/3] w-full object-cover"
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent"></div>
+        <figcaption class="absolute inset-x-5 bottom-5">
+          <div class="rounded-2xl bg-cream/95 p-5 backdrop-blur">
+            <Icon name="quote" size={24} class="text-sun-deep" />
+            <blockquote class="mt-2 text-[1.02rem] leading-snug text-ink">{REVIEWS[1].quote}</blockquote>
+            <span class="mt-2.5 block text-[0.84rem] text-slate">{REVIEWS[1].author} · Recenzie Google</span>
+          </div>
+        </figcaption>
       </figure>
     </div>
   </Section>
